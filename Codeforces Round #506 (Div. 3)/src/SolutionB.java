@@ -4,7 +4,7 @@ import java.util.Scanner;
 /**
  * http://codeforces.com/contest/1029/problem/B
  */
-public class TaskB {
+public class SolutionB {
 
     public static void main(String[] args) {
 

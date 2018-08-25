@@ -4,7 +4,7 @@ import java.util.Scanner;
 /**
  * http://codeforces.com/contest/1029/problem/A
  */
-public class TaskA {
+public class SolutionA1 {
 
     public static void main(String[] args) {
 
@@ -33,7 +33,7 @@ public class TaskA {
         }  while (!t.equals((t + appendix).substring(appendix.length())));
 
         StringBuilder sb = new StringBuilder(t);
-        for (int i = 0; i < k - 1; i++) {
+        for (int i = 1; i < k; i++) {
             sb.append(appendix);
         }
 
@@ -46,23 +46,20 @@ public class TaskA {
     }
 
     /*
-        test(append(8, 3, "abcaabca"), "abcaabcaabcaabca");
-
         test(append(3, 2, "cat"), "catcat");
-        test(append(1, 1, "a"), "a");
-        test(append(1, 3, "a"), "aaa");
-        test(append(2, 3, "cc"), "cccc");
+        test(append(1, 1, "a"),   "a");
+        test(append(1, 3, "a"),   "aaa");
+        test(append(2, 3, "cc"),  "cccc");
         test(append(3, 2, "qqq"), "qqqq");
         test(append(3, 1, "ddd"), "ddd");
-        test(append(6, 3, "abccda"), "abccdabccdabccda");
-
         test(append(3, 4, "aba"),       "ababababa");
         test(append(3, 4, "aba"),       "ababababa");
         test(append(5, 3, "ababa"),     "ababababa");
         test(append(7, 3, "abababa"),   "abababababa");
         test(append(9, 3, "ababababa"), "ababababababa");
-
-        test(append(6, 3, "abcabc"),  "abcabcabcabc");
-        test(append(7, 3, "abcabca"), "abcabcabcabca");
+        test(append(8, 3, "abcaabca"),  "abcaabcaabcaabca");
+        test(append(6, 3, "abccda"),    "abccdabccdabccda");
+        test(append(6, 3, "abcabc"),    "abcabcabcabc");
+        test(append(7, 3, "abcabca"),   "abcabcabcabca");
     */
 }
