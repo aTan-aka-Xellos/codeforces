@@ -25,54 +25,42 @@ public class TaskB {
 
     private static int context(int n, int[] array) {
 
-        int max = 1;
-        int[] neighbors = new int[n];
-        neighbors[0] = 1;
+        int current = 1, max = 1;
 
         for (int i = 1; i < n; i++) {
-
             if (array[i - 1] * 2 >= array[i]) {
-                neighbors[i] = neighbors[i - 1] + 1;
-                if (neighbors[i] > max) {
-                    max = neighbors[i];
+                current++;
+                if (current > max) {
+                    max = current;
                 }
             } else {
-                neighbors[i] = 1;
+                current = 1;
             }
         }
         return max;
     }
 
-/*
+/*      Tests:
 
-        int k = 10;
-        int[] arrayT = {1, 2, 5, 6, 7, 10, 21, 23, 24, 49};
-        System.out.println(context(k, arrayT));
+        int[] arrayT0 = {1, 2, 5, 6, 7, 10, 21, 23, 24, 49};
+        test(context(10, arrayT0), 4);
 
-        k = 5;
         int[] arrayT1 = {2, 10, 50, 110, 250};
-        System.out.println(context(k, arrayT1));
+        test(context(5, arrayT1), 1);
 
-        k = 6;
         int[] arrayT2 = {4, 7, 12, 100, 150, 199};
-        System.out.println(context(k, arrayT2));
+        test(context(6, arrayT2), 3);
 
-
-        k = 1;
         int[] arrayT3 = {10};
-        System.out.println(context(k, arrayT3));
-        test(context(k, arrayT3), 1);
+        test(context(1, arrayT3), 1);
 
-        k = 3;
         int[] arrayT4 = {10, 100, 1000};
-        System.out.println(context(k, arrayT4));
-        test(context(k, arrayT4), 1);
+        test(context(3, arrayT4), 1);
 
-        k = 5;
         int[] arrayT5 = {10, 100, 1000, 1001, 2002};
-        System.out.println(context(k, arrayT5));
-        test(context(k, arrayT5), 3);
+        test(context(5, arrayT5), 3);
  */
+
     private static void test(int actual, int expected) {
         if (actual != expected) System.err.println(actual + " != " + expected);
     }
