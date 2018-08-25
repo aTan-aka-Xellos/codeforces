@@ -28,14 +28,12 @@ public class SolutionB {
         int current = 1, max = 1;
 
         for (int i = 1; i < n; i++) {
-            if (array[i - 1] * 2 >= array[i]) {
+            if (array[i] <= array[i - 1] * 2) {
                 current++;
-                if (current > max) {
-                    max = current;
-                }
             } else {
                 current = 1;
             }
+            max = Math.max(current, max);
         }
         return max;
     }
