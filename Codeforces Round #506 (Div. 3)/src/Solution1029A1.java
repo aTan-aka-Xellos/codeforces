@@ -4,7 +4,7 @@ import java.util.Scanner;
 /**
  * http://codeforces.com/contest/1029/problem/A
  */
-public class SolutionA1 {
+public class Solution1029A1 {
 
     public static void main(String[] args) {
 
