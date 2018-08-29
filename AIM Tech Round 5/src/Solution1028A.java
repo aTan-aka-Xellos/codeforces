@@ -26,43 +26,41 @@ public class Solution1028A {
         out.flush();
         out.close();
 
+//        test();
+
     }
 
     private static int[] find(int n, int m, String[] arr) {
 
-        int first_line = -1;
+        int first_line = 0;
+        int last_line = 0;
         int col = 0;
+
         for (int i = 0; i < n; i++) {
 
-            first_line = i + 1;
-            if (arr[i].contains("B")) {
+            if (first_line == 0 && arr[i].contains("B")) {
                 first_line = i + 1;
-                col = arr[i].indexOf("B") + 1 + (arr[i].lastIndexOf("B") - arr[i].indexOf("B"))/2;
-                break;
+                last_line = first_line;
+                col = (arr[i].indexOf("B") + arr[i].lastIndexOf("B")) / 2 + 1;
             }
-        }
 
-        int last_line  = -1;
-
-        for (int i = n - 1; i >= 0; i--) {
             if (arr[i].contains("B")) {
-                last_line = i + 1;
-                break;
+                last_line++ ;
             }
         }
 
-        int line = first_line + (last_line - first_line)/2;
+        int line = (first_line + last_line) / 2;
 
         return new int[]{line, col};
+
     }
 
 
-    private static void test(int[] actual, int[] expected) {
-        System.out.println("Actual: " + actual[0] + ", " + actual[1]);
-        if (actual[0] != expected[0]) System.err.println(actual[0] + " != " + expected[0]);
-        if (actual[1] != expected[1]) System.err.println(actual[1] + " != " + expected[1]);
-    }
-    /*
+
+    private static void test() {
+
+        String[] test00 = new String[]{"B"};
+        test(find(1, 1, test00), new int[]{1, 1});
 
         String[] test0 = new String[]{"BBBBB", "BBBBB", "BBBBB", "BBBBB", "BBBBB"};
         test(find(5, 5, test0), new int[]{3, 3});
@@ -87,7 +85,6 @@ public class Solution1028A {
         test(find(3, 3, test7), new int[]{3, 1});
 
 
-
         String[] test4 = new String[]{"WWW", "WWW", "WWB"};
         test(find(3, 3, test4), new int[]{3, 3});
 
@@ -95,5 +92,15 @@ public class Solution1028A {
             "WWBBBBBW", "WWBBBBBW", "WWBBBBBW", "WWBBBBBW", "WWBBBBBW",
             "WWWWWWWW", "WWWWWWWW", "WWWWWWWW"};
         test(find(9, 8, test5), new int[]{4, 5});
-    */
+
+    }
+
+    private static void test(int[] actual, int[] expected) {
+        System.out.println("Actual  : " + actual[0] + ", " + actual[1]);
+        System.out.println("Expected: " + expected[0] + ", " + expected[1]);
+
+        if (actual[0] != expected[0]) System.out.println(actual[0] + " != " + expected[0]);
+        if (actual[1] != expected[1]) System.out.println(actual[1] + " != " + expected[1]);
+        System.out.println();
+    }
 }
