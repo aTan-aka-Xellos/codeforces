@@ -1,62 +1,72 @@
-import static java.lang.Math.abs;
-
 import java.io.*;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 
 /**
- * https://codeforces.com/contest/1037/problem/B
+ * https://codeforces.com/contest/1040/problem/A
  */
-public class Solution1037B {
+public class Solution1040A {
 
     public static void main(String[] args) {
         PrintWriter out = new PrintWriter(System.out);
         InputReader in = new InputReader(System.in);
 
         int n = in.readInt();
-        int m = in.readInt();
-        int[] array = new int[n];
+        int a = in.readInt();
+        int b = in.readInt();
 
-        for (int i = 0; i < n; i++) {
-            array[i] = in.readInt();
-        }
+        int[] c = in.readIntArray(n);
 
-        out.print(solve(array, n, m));
+        out.print(count(n, a, b, c));
         out.flush();
         out.close();
 
 //        test();
     }
 
-    private static long solve(int[] a, int n, int m) {
+    private static int count(int n, int a, int b, int[] c) {
 
-        Arrays.sort(a);
-
-        long first = 0, second = 0;
+        int sum = 0;
 
         for (int i = 0; i < n / 2; i++) {
-            if (a[i] > m) first += a[i] - m;
-            if (a[n - 1 - i] < m) {
-                second += m - a[n - 1 - i];
+            int left = c[i];
+            int right = c[n - i - 1];
+
+            if (left != right && left != 2 && right != 2) return -1;
+
+            if (left == 2 && right == 2) sum += 2 * Math.min(a, b);
+
+            if (left != right) {
+                if (left == 0 || right == 0) sum += a;
+                if (left == 1 || right == 1) sum += b;
             }
         }
-        return first + second + abs(a[n/2] - m);
+
+        if (n % 2 != 0 && c[n / 2] == 2) sum += Math.min(a, b);
+
+        return sum;
+
     }
 
     private static void test() {
-        test(solve(new int[]{5}, 1, 5), 0);
-        test(solve(new int[]{5}, 1, 7), 2);
 
-        test(solve(new int[]{6, 5, 8}, 3, 8), 2);
-        test(solve(new int[]{21, 15, 12, 11, 20, 19, 12}, 7, 20), 6);
-        test(solve(new int[]{21, 15, 12, 11, 21, 19, 12}, 7, 20), 6);
-        test(solve(new int[]{14, 20, 10, 15, 12, 18, 22}, 7, 11), 8);
+        test(count(2, 9, 6,  new int[]{2, 2}), 12);
 
-        test(solve(new int[]{5, 6, 7, 15, 15, 15, 15}, 7, 20), 20);
-        test(solve(new int[]{5, 5, 5, 5, 15, 15, 15}, 7, 0), 20);
+        test(count(5, 100, 1, new int[]{0, 1, 2, 1, 2}), 101);
+        test(count(3, 10, 12, new int[]{1, 2, 0}), -1);
+        test(count(3, 12, 1,  new int[]{0, 1, 0}), 0);
+
+        test(count(1, 10, 20,  new int[]{0}), 0);
+        test(count(1, 10, 20,  new int[]{1}), 0);
+        test(count(1, 10, 20,  new int[]{2}), 10);
+
+        test(count(2, 10, 20,  new int[]{1, 0}), -1);
+        test(count(2, 10, 20,  new int[]{1, 2}), 20);
+        test(count(2, 10, 20,  new int[]{1, 1}), 0);
+
+
     }
 
-        private static void test(long actual, long expected) {
+        private static void test(int actual, int expected) {
         if (actual != expected) {
             System.out.println(actual + " != " + expected);
         }
