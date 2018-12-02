@@ -1,0 +1,4 @@
+3 14
+This_Is_Test_*
+Sentence_WithT
+woLikesOfWords
