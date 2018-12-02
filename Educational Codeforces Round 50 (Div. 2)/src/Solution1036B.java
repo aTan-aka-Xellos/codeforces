@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * https://codeforces.com/contest/1040/problem/B
+ * https://codeforces.com/contest/1036/problem/B
  */
-public class Solution1040B {
+public class Solution1036B {
 
     private static ByteArrayOutputStream interceptedStream = new ByteArrayOutputStream();
     private static PrintStream systemOut = System.out;
@@ -27,29 +27,21 @@ public class Solution1040B {
     }
 
     static void solve() {
+        int q = in.nextInt();
 
-        int n = in.nextInt();
-        int k = in.nextInt();
+        for (int i = 0; i < q; i++) {
+            long n = in.nextLong();
+            long m = in.nextLong();
+            long k = in.nextLong();
 
+            long ans = k;
 
-        int div   = n % (2 * k + 1);   // 2 * k + 1 - interval covered by 1 item
-        int count = n / (2 * k + 1);   // number of items
-        int first = k + 1;
+            if (n % 2 != k % 2) ans--;
+            if (m % 2 != k % 2) ans--;
 
-        if (div != 0) {                // interval not divisible on even sections 2 * k +1
-            count += 1;
-            first = div - k;           // if remainder bigger  than k
-            if (div <= k) first = div; // if remainder smaller than k
-        }
+            if (k < n || k < m) ans = -1;
 
-        if (k >= n) {
-            count = 1;
-            first = 1;
-        }
-
-        out.println(count);
-        for (int i = 0; i < count; i++) {
-            out.print(first + (2 * k + 1) * i + " ");
+            out.println(ans);
         }
     }
 
