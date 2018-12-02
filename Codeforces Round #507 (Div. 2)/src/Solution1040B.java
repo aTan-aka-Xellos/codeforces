@@ -1,3 +1,4 @@
+import static java.lang.Math.abs;
 import static java.lang.String.format;
 
 import java.io.*;
@@ -11,12 +12,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Template for contests.
- * Methods split into util classes.
- * Support test from txt source.
- * @author aTan-aka-Xellos
+ * https://codeforces.com/contest/1040/problem/B
  */
-public class Template {
+public class Solution1040B {
 
     private static ByteArrayOutputStream interceptedStream = new ByteArrayOutputStream();
     private static PrintStream systemOut = System.out;
@@ -26,28 +24,36 @@ public class Template {
 
     public static void main(String[] args) throws IOException {
 
-        String testFile = "<folder>/test/%s";
-        String testAns  = "<folder>/test/%sa";
-
-
-        for (int k = 1; k <= 10; k++) {
-
-            enableTestFromFile(format(testFile, k));
-            solve();
-
-            long[] ans = getResultsFromInterceptedStream();
-            Assert.assertEquals(ans, $.readFileAsLong(format(testAns , k)));
-
-            out.flush();
-        }
-
-//        solve();
+        solve();
         out.flush();
         out.close();
     }
 
     static void solve() {
 
+        int n = in.nextInt();
+        int k = in.nextInt();
+
+
+        int div   = n % (2 * k + 1);   // 2 * k + 1 - interval covered by 1 item
+        int count = n / (2 * k + 1);   // number of items
+        int first = k + 1;
+
+        if (div != 0) {                // interval not divisible on even sections 2 * k +1
+            count += 1;
+            first = div - k;           // if remainder bigger  than k
+            if (div <= k) first = div; // if remainder smaller than k
+        }
+
+        if (k >= n) {
+            count = 1;
+            first = 1;
+        }
+
+        out.println(count);
+        for (int i = 0; i < count; i++) {
+            out.print(first + (2 * k + 1) * i + " ");
+        }
     }
 
     private static void enableTestFromFile(String fileName) throws IOException {
