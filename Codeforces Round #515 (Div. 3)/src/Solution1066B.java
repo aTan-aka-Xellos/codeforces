@@ -1,6 +1,5 @@
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static java.lang.String.format;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -23,7 +22,7 @@ public class Solution1066B {
     private static PrintWriter out = new PrintWriter(System.out);
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         solve();
         out.flush();
@@ -39,7 +38,6 @@ public class Solution1066B {
         int ans = 0;
         int[] heaters = new int[n];
 
-
         // turn on all heaters, count how many of them heat on each [i] block
         for (int i = 0; i < n; i++) {
             if (a[i] == 0) continue;
@@ -50,36 +48,34 @@ public class Solution1066B {
         }
 
         for (int i = 0; i < n; i++) {
+            if (heaters[i] == 0) {
+                out.print(-1);
+                return;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
             if (a[i] == 0) continue;
 
-            // check if heater is useful
-            boolean useful = false;
+            // check if heater is useless
+            boolean useless = true;
             for (int j = max(0, i - r + 1); j < min(n, i + r); j++) {
                 if (heaters[j] == 1) {
-                    useful = true;
+                    useless = false;
                     break;
                 }
             }
 
             // if not useful - turn it off
-            if (!useful) {
+            if (useless) {
+                ans--;
                 for (int j = max(0, i - r + 1); j < min(n, i + r); j++)
                     heaters[j]--;
-                a[i]--;
-            }
-        }
-
-
-        for (int i = 0; i < n; i++) {
-            if (heaters[i] == 0) {
-                ans = -1;
-                break;
             }
         }
 
         out.print(ans);
     }
-
 
 
     private static void enableTestFromFile(String fileName) throws IOException {
