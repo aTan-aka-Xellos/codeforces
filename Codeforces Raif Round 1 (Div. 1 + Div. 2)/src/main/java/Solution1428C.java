@@ -1,22 +1,14 @@
-import static java.lang.String.format;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Template for contests.
- * Methods split into util classes.
- * Support test from txt source.
- * @author aTan-aka-Xellos
- */
-public class Template {
+import static java.lang.String.format;
+
+public class Solution1428C {
+
 
     private static ByteArrayOutputStream interceptedStream = new ByteArrayOutputStream();
     private static PrintStream systemOut = System.out;
@@ -26,28 +18,46 @@ public class Template {
 
     public static void main(String[] args) throws IOException {
 
-        String testFile = "<folder>/test/%s";
-        String testAns  = "<folder>/test/%sa";
+        String testFile = "NewRound/src/test/%s.txt";
+        String testAns  = "NewRound/src/test/%sa.txt";
 
 
-        for (int k = 1; k <= 10; k++) {
+        for (int k = 1; k <= 0; k++) {
 
             enableTestFromFile(format(testFile, k));
             solve();
 
-            long[] ans = getResultsFromInterceptedStream();
+            long[] ans = getResultsFromInterceptedStreamAsLogArray();
             Assert.assertEquals(ans, $.readFileAsLong(format(testAns , k)));
 
             out.flush();
         }
 
-//        solve();
+        int tc = in.nextInt();
+
+        for (int i = 0; i < tc; i++) {
+            solve();
+        }
+
         out.flush();
         out.close();
     }
 
     static void solve() {
+        String s = in.next().trim();
 
+        Stack<Character> stack = new Stack<>();
+        stack.push('X');
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'B' && stack.peek() != 'X') {
+                stack.pop();
+            } else {
+                stack.push(s.charAt(i));
+            }
+        }
+
+        out.println(stack.size() - 1);
     }
 
     private static void enableTestFromFile(String fileName) throws IOException {
@@ -57,7 +67,12 @@ public class Template {
     }
 
 
-    private static long[] getResultsFromInterceptedStream() {
+    private static long[] getResultsFromInterceptedStreamAsLogArray() {
+        String[] stringArray = getResultsFromInterceptedStreamAsStringArray();
+        return $.arrayStringToLong(stringArray);
+    }
+
+    private static String[] getResultsFromInterceptedStreamAsStringArray() {
         out.flush();
         String[] stringArray = interceptedStream.toString().split("\r\n");
 
@@ -65,7 +80,7 @@ public class Template {
         System.setOut(systemOut);
         out = new PrintWriter(System.out);
 
-        return $.arrayStringToLong(stringArray);
+        return stringArray;
     }
 
 
@@ -89,14 +104,14 @@ public class Template {
         static void assertEquals(int[] actual, int[] expected) {
             if (!Arrays.equals(actual, expected)) {
                 throw new RuntimeException("\n" + Arrays.toString(actual)
-                    + "\n" + Arrays.toString(expected));
+                        + "\n" + Arrays.toString(expected));
             }
         }
 
         static void assertEquals(long[] actual, long[] expected) {
             if (!Arrays.equals(actual, expected)) {
                 throw new RuntimeException("\n" + Arrays.toString(actual)
-                    + "\n" + Arrays.toString(expected));
+                        + "\n" + Arrays.toString(expected));
             }
         }
     }
@@ -203,7 +218,7 @@ public class Template {
             long[] longArray = new long[stringArray.length];
 
             for (int i = 0; i < stringArray.length; i++) {
-                longArray[i] = Long.parseLong(stringArray[i]);
+                longArray[i] = Long.parseLong(stringArray[i].trim());
             }
             return longArray;
         }
@@ -212,7 +227,7 @@ public class Template {
             int[] intArray = new int[stringArray.length];
 
             for (int i = 0; i < stringArray.length; i++) {
-                intArray[i] = Integer.parseInt(stringArray[i]);
+                intArray[i] = Integer.parseInt(stringArray[i].trim());
             }
             return intArray;
         }
